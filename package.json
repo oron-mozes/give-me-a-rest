@@ -2,9 +2,15 @@
   "name": "rest-builder",
   "version": "1.0.0",
   "description": "Export your REST api through functions and builders",
-  "main": "index.js",
+  "types": "./lib/cjs/types/index.d.ts",
+  "main": "./lib/cjs/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "prepack": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -19,5 +25,23 @@
   "bugs": {
     "url": "https://github.com/oron-mozes/rest-builder/issues"
   },
-  "homepage": "https://github.com/oron-mozes/rest-builder#readme"
+  "homepage": "https://github.com/oron-mozes/rest-builder#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "dependencies": {
+    "typescript": "^4.9.5"
+  }
 }
