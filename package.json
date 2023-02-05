@@ -1,0 +1,23 @@
+{
+  "name": "rest-builder",
+  "version": "1.0.0",
+  "description": "Export your REST api through functions and builders",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oron-mozes/rest-builder.git"
+  },
+  "keywords": [
+    "REST",
+    "Testing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oron-mozes/rest-builder/issues"
+  },
+  "homepage": "https://github.com/oron-mozes/rest-builder#readme"
+}
