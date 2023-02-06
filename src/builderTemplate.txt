@@ -1,0 +1,11 @@
+export function #name#Builder() {
+
+    const data=#defaultData#
+
+    return {
+        #handlers#,
+        build() {
+            return this
+        }
+    }
+}
