@@ -2,15 +2,20 @@
   "name": "rest-builder",
   "version": "1.0.0",
   "description": "Export your REST api through functions and builders",
-  "types": "./lib/cjs/types/index.d.ts",
-  "main": "./lib/cjs/index.js",
+  "types": "./dist/cjs/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
   "scripts": {
-    "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
-    "prepack": "npm run build",
-    "test": "mocha"
+    "prepack": "npm run build"
+  },
+  "bin": {
+    "rest-builder": "dist/cjs/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
