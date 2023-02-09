@@ -1,6 +1,6 @@
 {
   "name": "give-me-a-rest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Export your REST api through functions and builders",
   "types": "./dist/cjs/types/index.d.ts",
   "main": "./dist/cjs/index.js",
