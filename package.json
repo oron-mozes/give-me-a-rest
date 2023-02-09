@@ -12,7 +12,7 @@
     "prepack": "npm run build"
   },
   "bin": {
-    "give-me-a-rest": "dist/cjs/index.js"
+    "give-me-a-rest": "./dist/cjs/index.js"
   },
   "publishConfig": {
     "access": "public"
