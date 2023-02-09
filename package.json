@@ -1,6 +1,6 @@
 {
   "name": "give-me-a-rest",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Export your REST api through functions and builders",
   "types": "./dist/cjs/types/index.d.ts",
   "main": "./dist/cjs/index.js",
@@ -11,9 +11,7 @@
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
     "prepack": "npm run build"
   },
-  "bin": {
-    "give-me-a-rest": "./dist/cjs/index.js"
-  },
+  "bin":"./dist/cjs/index.js",
   "publishConfig": {
     "access": "public"
   },
