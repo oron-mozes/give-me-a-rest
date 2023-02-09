@@ -9,7 +9,7 @@
       "declaration": true,
       "declarationMap": true,
       "allowSyntheticDefaultImports": true,
-      "outDir": "dist",
+      "outDir": "lib",
     },
     "files": ["src/index.ts"]
   }
