@@ -1,5 +1,5 @@
 {
-  "name": "rest-builder",
+  "name": "give-me-a-rest",
   "version": "1.0.0",
   "description": "Export your REST api through functions and builders",
   "types": "./dist/cjs/types/index.d.ts",
@@ -12,14 +12,14 @@
     "prepack": "npm run build"
   },
   "bin": {
-    "rest-builder": "dist/cjs/index.js"
+    "give-me-a-rest": "dist/cjs/index.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oron-mozes/rest-builder.git"
+    "url": "git+https://github.com/oron-mozes/give-me-a-rest.git"
   },
   "keywords": [
     "REST",
@@ -28,9 +28,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/oron-mozes/rest-builder/issues"
+    "url": "https://github.com/oron-mozes/give-me-a-rest/issues"
   },
-  "homepage": "https://github.com/oron-mozes/rest-builder#readme",
+  "homepage": "https://github.com/oron-mozes/give-me-a-rest#readme",
   "files": [
     "lib/**/*"
   ],

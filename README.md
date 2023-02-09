@@ -1,4 +1,4 @@
-# rest-builder
+# give-me-a-rest
 export your api through functions and builders
 
 
