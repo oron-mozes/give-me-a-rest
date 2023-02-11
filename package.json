@@ -1,6 +1,6 @@
 {
   "name": "give-me-a-rest",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Export your REST api through functions and builders",
   "types": "./lib/types/index.d.ts",
   "main": "./lib/index.js",
