@@ -1,0 +1,13 @@
+#builderInterface#
+
+export function #name#Builder() {
+
+    const data:#interface#=#defaultData#
+
+    return {
+        #handlers#
+        build() {
+            return this
+        }
+    }
+}

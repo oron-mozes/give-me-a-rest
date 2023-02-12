@@ -1,0 +1,4 @@
+with#fnName#(#key#:#type#){
+data.#key# = #key#
+return this
+},

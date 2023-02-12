@@ -1,9 +1,11 @@
+#builderInterface#
+
 export function #name#Builder() {
 
-    const data=#defaultData#
+    const data:#interface#=#defaultData#
 
     return {
-        #handlers#,
+        #handlers#
         build() {
             return this
         }

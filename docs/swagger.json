@@ -1,0 +1,298 @@
+{
+  "components": {
+    "examples": {},
+    "headers": {},
+    "parameters": {},
+    "requestBodies": {},
+    "responses": {},
+    "schemas": {
+      "TValue": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "properties": {},
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TValue"
+            },
+            "type": "object"
+          },
+          {
+            "items": {
+              "$ref": "#/components/schemas/TValue"
+            },
+            "type": "array"
+          }
+        ]
+      },
+      "ISav": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ts": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/TValue"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": ["name", "id"],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "attributes": {
+            "items": {
+              "$ref": "#/components/schemas/ISav"
+            },
+            "type": "array"
+          },
+          "sign": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "ts",
+          "name",
+          "display_name",
+          "value",
+          "topic",
+          "sign"
+        ],
+        "type": "object",
+        "additionalProperties": true
+      },
+      "IRawQuestionnaire": {
+        "properties": {
+          "version": {
+            "type": "number",
+            "format": "double"
+          },
+          "items": {},
+          "type": {},
+          "start_time": {
+            "type": "number",
+            "format": "double"
+          },
+          "end_time": {
+            "type": "number",
+            "format": "double"
+          },
+          "in_progress": {
+            "type": "boolean"
+          },
+          "name": {},
+          "id": {},
+          "associated_message_id": {
+            "type": "string"
+          },
+          "visit_id": {}
+        },
+        "required": ["id"],
+        "type": "object",
+        "additionalProperties": true
+      },
+      "ICondition": {
+        "properties": {
+          "probability": {
+            "type": "number",
+            "format": "double"
+          },
+          "is_severe": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "condition_group": {
+            "type": "string"
+          },
+          "icd10_code": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "probability",
+          "is_severe",
+          "id",
+          "name",
+          "condition_group",
+          "icd10_code"
+        ],
+        "type": "object",
+        "additionalProperties": true
+      },
+      "INestedMedicalConversation": {
+        "properties": {
+          "savs": {
+            "items": {
+              "$ref": "#/components/schemas/ISav"
+            },
+            "type": "array"
+          },
+          "questionnaires": {
+            "items": {
+              "$ref": "#/components/schemas/IRawQuestionnaire"
+            },
+            "type": "array"
+          },
+          "conditions": {
+            "items": {
+              "$ref": "#/components/schemas/ICondition"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "additionalProperties": true
+      },
+      "IGetConversationNestedResponse": {
+        "properties": {
+          "userResponse": {
+            "$ref": "#/components/schemas/INestedMedicalConversation"
+          }
+        },
+        "required": ["userResponse"],
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "title": "medical-conversation",
+    "version": "1.0.0",
+    "description": "K platfom microservice example NodeJs / TS / Express",
+    "license": {
+      "name": "ISC"
+    },
+    "contact": {
+      "name": "Oron Mozes  ",
+      "email": "oron.mozes@khealth.com"
+    }
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/conversation/nested/{medicalCaseId}": {
+      "get": {
+        "operationId": "GetConversation",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IGetConversationNestedResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["k8s"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "medicalCaseId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "IsHealthy",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["k8s"],
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/ready": {
+      "get": {
+        "operationId": "IsReady",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ready": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["ready"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["k8s"],
+        "security": [],
+        "parameters": []
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ]
+}

@@ -1,61 +1,43 @@
 #! /usr/bin/env node
 
-// const fs = require('fs')
-// const { argv } = require('node:process')
+import fs from "fs";
+import path from "node:path";
 
-// const swaggerFilePath = argv
-//     .find(arg => arg.startsWith('--file'))
-//     ?.split('=')[1]
-// if (!swaggerFilePath) {
-//     throw 'missing file path'
-// }
-// const types = {
-//     string: '',
-//     number: 1,
-//     boolean: false,
-// }
+import { getSwaggerData } from "./getSwaggerData";
+import { createBuilderFunction } from "./createBuilderFunction";
+import { createAggregatedBuildersFile } from "./createAggregatedBuildersFile";
 
-// const data = fs.readFileSync(swaggerFilePath, { encoding: 'utf8', flag: 'r' })
-// const builderTemplate = fs.readFileSync('generator/builderTemplate.txt', {
-//     encoding: 'utf8',
-//     flag: 'r',
-// })
-// const swaggerData = JSON.parse(data)
-// // for (const schema in swaggerData.schemas) {
-// //     const templateCopy = builderTemplate
-// // }
-// const details = getObjectDetails(
-//     'ICondition',
-//     swaggerData.components.schemas.ICondition,
-//     builderTemplate,
-// )
-// console.log(details)
-// fs.writeFileSync(
-//     `./builderICondition.js`,
-//     getObjectDetails(
-//         'ICondition',
-//         swaggerData.components.schemas.ICondition,
-//         builderTemplate,
-//     ),
-// )
+const config: { path: string[] } = JSON.parse(
+  fs.readFileSync("./rest.config.json", {
+    encoding: "utf8",
+  })
+);
 
-// function getObjectDetails(schema, data, template) {
-//     const initialData = {}
-//     const handlers = []
-//     for (const mustHave of data.required) {
-//         initialData[mustHave] = types[mustHave.type]
-//     }
-//     template = template.replace('#defaultData#', JSON.stringify(initialData))
-//     for (const key in data) {
-//         const fnName = `${key.substring(0, 1).toUpperCase()}${key.substring(1)}`
-//         handlers.push(`with${fnName}(${key}){
-//             data.${key} = ${key}
-//             return this;
-//         }`)
-//     }
-//     template = template.replace('#handlers#', handlers.join(','))
-//     template = template.replace('#name#', schema)
-//     return template
-// }
+const { path: swaggerFilesPath } = config;
+const builderTemplate = fs.readFileSync(
+  path.resolve(__dirname, "generator/builderTemplate.txt"),
+  {
+    encoding: "utf8",
+    flag: "r",
+  }
+);
 
-console.log("Hello");
+if (!swaggerFilesPath) {
+  throw "missing file path";
+}
+const buildersData: string[] = [];
+async function generate(path: string) {
+  const swaggerData = getSwaggerData(path);
+  for (const schemaKey in swaggerData.components.schemas) {
+    buildersData.push(
+      await createBuilderFunction(schemaKey, builderTemplate, swaggerData)
+    );
+  }
+}
+(async () => {
+  for (const path of swaggerFilesPath) {
+    await generate(path);
+  }
+
+  createAggregatedBuildersFile(buildersData.join(" "));
+})();
